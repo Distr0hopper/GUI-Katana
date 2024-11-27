@@ -4,28 +4,20 @@ using Unity.Robotics.ROSTCPConnector;
 using Unity.VisualScripting;
 using UnityEngine;
 using RosMessageTypes.Sensor;
+using UnityEngine.UIElements;
 
 public class RobotConnectionManager : MonoBehaviour
 {
-    private ConnectionState connectionState;
+    private ConnectionState connectionState { get; set; }
     [SerializeField] private string katana_ip = "213.65.204.181";
     private ROSConnection rosConnection { get; set; }
 
     private float connectionCheckDelay = 1.0f; 
     private float lastConnectionCheckTime;
-
-    // Define method for connection status changed event
-    public delegate void ConnectionStatusChangedHandler(bool isConnected);
-    
-    // Event for connection status changed
-    public event ConnectionStatusChangedHandler OnConnectionStatusChanged;
     
 
     void Start()
     {
-        // Initialize ConnectionState model
-        connectionState = new ConnectionState(katana_ip);
-
         // Initialize ROS connection
         rosConnection = ROSConnection.GetOrCreateInstance();
         rosConnection.RosIPAddress = katana_ip;
@@ -39,27 +31,22 @@ public class RobotConnectionManager : MonoBehaviour
         {
             lastConnectionCheckTime = Time.time;
             CheckConnection();
-            Debug.Log("Connection Status: " + GetConnectionState().isConnected);
         }
     }
 
     private void CheckConnection()
     {
         // Logic to check the actual connection status
-        bool currentConnectionStatus = !rosConnection.HasConnectionError;
-        if (connectionState.isConnected != currentConnectionStatus)
-        {
-            string errorMessage = currentConnectionStatus ? string.Empty : "Connection error detected";
-            connectionState.UpdateConnectionStatus(currentConnectionStatus, errorMessage);
-            
-            OnConnectionStatusChanged?.Invoke(currentConnectionStatus);
-        }
+        bool isConnected = !rosConnection.HasConnectionError;
+        string errorMessage = isConnected ? string.Empty : "Connection error detected";
+
+        // Update the ConnectionState
+        connectionState.UpdateConnectionStatus(isConnected, errorMessage);
     }
 
-    // Public Accessor for ConnectionState
-    public ConnectionState GetConnectionState()
+    public void SetConnectionState(ConnectionState connectionState)
     {
-        return connectionState;
+        this.connectionState = connectionState;
     }
 
 }

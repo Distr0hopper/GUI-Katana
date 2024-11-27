@@ -1,3 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="SafeZone" style="flex-grow: 1; background-color: rgb(128, 142, 155);" />
+    <ui:VisualElement name="SafeZone" style="flex-grow: 1; background-color: rgb(128, 142, 155); height: 1293px; width: 1933px; justify-content: space-between;">
+        <ui:VisualElement name="Top" style="flex-grow: 0.2; flex-shrink: 0.2; -unity-background-image-tint-color: rgb(87, 95, 207); align-items: stretch; top: auto; background-color: rgb(87, 95, 207);" />
+        <ui:VisualElement name="Middle" style="flex-grow: 0.8; flex-shrink: 0.6;">
+            <ui:VisualElement name="SideBar" style="flex-grow: 1; background-color: rgb(255, 221, 89); height: 100%; width: 30%;">
+                <ui:VisualElement name="ConnectionOuter" style="flex-grow: 1; background-color: rgb(255, 63, 52); width: 100%; height: 20%; max-height: 20%; justify-content: center; flex-direction: row; align-items: center; align-self: stretch; flex-wrap: nowrap; top: auto;">
+                    <ui:VisualElement name="ConnectionInner" style="flex-grow: 1; background-color: rgb(255, 94, 87); max-height: 70%; max-width: 80%; justify-content: center; top: auto; min-height: 70%; min-width: 80%; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px;">
+                        <ui:Label tabindex="-1" text="Connection" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConnectionLabel" style="font-size: 60px; -unity-text-align: upper-center; color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
