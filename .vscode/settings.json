@@ -57,5 +57,6 @@
         "Temp/": true
     },
     "dotnet.defaultSolution": "GUI-Katana.sln",
-    "dotnet.preferCSharpExtension": true
+    "dotnet.preferCSharpExtension": true,
+    "ros.distro": "humble"
 }

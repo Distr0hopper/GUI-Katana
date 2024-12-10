@@ -2,14 +2,14 @@
     "UxmlGuid": "c80ef61de79210a3abbf1f96abfab29b",
     "UxmlPath": "Assets/Scripts/GUI/GUI_Main_XML.uxml",
     "CanvasX": 0,
-    "CanvasY": 0,
+    "CanvasY": -1,
     "CanvasWidth": 1920,
-    "CanvasHeight": 1080,
+    "CanvasHeight": 1081,
     "MatchGameView": false,
-    "ZoomScale": 0.30000001192092898,
+    "ZoomScale": 0.4000000059604645,
     "PanOffset": {
-        "x": 99.01153564453125,
-        "y": 139.73573303222657
+        "x": 12.903564453125,
+        "y": 81.16473388671875
     },
     "ColorModeBackgroundOpacity": 1.0,
     "ImageModeCanvasBackgroundOpacity": 1.0,

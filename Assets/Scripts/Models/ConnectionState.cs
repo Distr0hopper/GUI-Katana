@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [System.Serializable] // Ensure that class is not MonoBehaviour or ScriptableObject (just Plain Old C# Object)
@@ -12,21 +13,31 @@ public class ConnectionState
     public delegate void ConnectionStateChangedHandler();
     public event ConnectionStateChangedHandler OnStateChanged;
 
+    public enum ConnectionStatus{
+        Connected,
+        Pending,
+        Disconnected
+    }
+
+    public ConnectionStatus Status { get; set; }
+
     public ConnectionState(string robotIP)
     {
-        isConnected = false;
+        Status = ConnectionStatus.Disconnected;
         RobotIP = robotIP;
         LastError = string.Empty;
     }
 
-    public void UpdateConnectionStatus(bool isConnected, string error = "")
+    public void UpdateConnectionStatus(ConnectionStatus status, string error = "")
 {
-    if (this.isConnected != isConnected || LastError != error)
-    {
-        this.isConnected = isConnected;
-        LastError = error;
-        OnStateChanged.Invoke();
-    }
+    if (Status != status || LastError != error)
+        {
+            Status = status;
+            LastError = error;
+
+            UnityEngine.Debug.Log($"Connection state updated: {Status}");
+            OnStateChanged?.Invoke();
+        }
 }
 
 }

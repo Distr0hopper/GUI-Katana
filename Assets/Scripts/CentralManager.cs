@@ -10,7 +10,7 @@ public class CentralManager : MonoBehaviour
     {
         // Find the controllers
         var connectionLabel = FindObjectOfType<ConnectionLabel>();
-        var connectionController = FindObjectOfType<RobotConnectionManager>();
+        var connectionController = FindObjectOfType<ConnectionController>();
 
         // Ensure the components exist
         if (connectionLabel == null)
@@ -29,7 +29,7 @@ public class CentralManager : MonoBehaviour
         connectionState = new ConnectionState("213.65.204.181");
 
         // Inject the dependency
-        connectionLabel.SetConnectionState(connectionState);
-        connectionController.SetConnectionState(connectionState);
+        connectionLabel.SetConnectionState(connectionState); // Given UI the model 
+        connectionController.SetConnectionState(connectionState); // Given controller the model
     }
 }
