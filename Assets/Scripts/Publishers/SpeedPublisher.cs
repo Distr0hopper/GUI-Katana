@@ -46,6 +46,6 @@ public class SpeedPublisher : MonoBehaviour
     {
         speedMessage.data = newSpeed;
         ros.Publish(topicName, speedMessage);
-        Debug.Log($"Published Speed: {speedMessage.data}");
+        //Debug.Log($"Published Speed: {speedMessage.data}");
     }
 }

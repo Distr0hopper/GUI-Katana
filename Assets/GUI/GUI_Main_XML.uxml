@@ -42,8 +42,14 @@
             <ui:VisualElement name="SideBar" style="flex-grow: 0; background-color: rgb(30, 39, 46); height: 97%; width: 30%; max-width: 30%; justify-content: flex-start; align-items: center; flex-shrink: 0;">
                 <ui:VisualElement name="VelocityContainer" style="flex-grow: 0; background-color: rgb(72, 84, 96); height: 25%; min-height: auto; max-height: 25%; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; max-width: 95%; width: 95%; flex-shrink: 0;">
                     <ui:Label tabindex="-1" text="Velocity" parse-escape-sequences="true" display-tooltip-when-elided="true" name="VelocityText" style="font-size: 30px; justify-content: flex-start; -unity-text-align: upper-left; -unity-font-style: normal; color: rgb(128, 142, 155); padding-left: 30px;" />
-                    <ui:VisualElement name="UnderLabelContainer" style="flex-grow: 1; flex-direction: row;">
-                        <ui:VisualElement name="LeftContainer" style="flex-grow: 0; width: 50%; flex-shrink: 0; align-items: center; justify-content: space-between;">
+                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: flex-start; flex-direction: row; align-self: auto;">
+                        <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: center; width: 40%; height: auto;">
+                            <ui:Label tabindex="-1" text="0.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="VelocityValue" style="font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="m/s" parse-escape-sequences="true" display-tooltip-when-elided="true" name="VelocityUnit" style="font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="OLDUnderLabelContainer" style="flex-grow: 1; flex-direction: row; display: none;">
+                        <ui:VisualElement name="LeftContainer" style="flex-grow: 0; width: 50%; flex-shrink: 0; align-items: center; justify-content: space-between; display: flex;">
                             <ui:VisualElement name="FL" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 45%; background-color: rgb(128, 142, 155); border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; justify-content: center;">
                                 <ui:Label tabindex="-1" text="0,0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LabelFL" style="-unity-text-align: upper-center; font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
                             </ui:VisualElement>
@@ -51,7 +57,7 @@
                                 <ui:Label tabindex="-1" text="0,0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LabelRL" style="-unity-text-align: upper-center; font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-                        <ui:VisualElement name="RightContainer" style="flex-grow: 0; width: 50%; flex-shrink: 0; align-items: center; justify-content: space-between;">
+                        <ui:VisualElement name="RightContainer" style="flex-grow: 0; width: 50%; flex-shrink: 0; align-items: center; justify-content: space-between; display: flex;">
                             <ui:VisualElement name="FR" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 45%; background-color: rgb(128, 142, 155); border-top-left-radius: 100px; border-top-right-radius: 100px; border-bottom-right-radius: 100px; border-bottom-left-radius: 100px; justify-content: center;">
                                 <ui:Label tabindex="-1" text="0,0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LabelFR" style="-unity-text-align: upper-center; font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
                             </ui:VisualElement>
@@ -82,7 +88,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="ControllContainer" style="flex-grow: 0.83; flex-shrink: 0; width: 95%; height: 30%; background-color: rgb(72, 84, 96); border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; margin-top: 20px; justify-content: flex-start; align-items: flex-start;">
-                    <ui:Label tabindex="-1" text="Controll:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ControllText" style="font-size: 30px; justify-content: flex-start; -unity-text-align: upper-left; -unity-font-style: normal; color: rgb(128, 142, 155); padding-left: 30px;" />
+                    <ui:Label tabindex="-1" text="Control:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ControlText" style="font-size: 30px; justify-content: flex-start; -unity-text-align: upper-left; -unity-font-style: normal; color: rgb(128, 142, 155); padding-left: 30px;" />
                     <ui:VisualElement style="flex-grow: 1; width: 100%; height: 100%; align-items: center; justify-content: flex-start;">
                         <ui:VisualElement style="flex-grow: 0; background-color: rgb(128, 142, 155); border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; width: 95%; height: 30%; align-items: center; justify-content: flex-start;">
                             <ui:VisualElement name="ValueContainer" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; align-self: auto; width: 90%; margin-top: 0; flex-wrap: nowrap;">

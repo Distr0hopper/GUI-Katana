@@ -4,44 +4,44 @@ using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.Geometry;
 using RosMessageTypes.Sensor;
+using RosMessageTypes.Std;
 
 public class IncomingMessageController : MonoBehaviour
 {
 
 
     private ROSConnection ROSConnection;
-    [SerializeField] private string velocityTopic = "/robot/velocity";
-    [SerializeField] private string cameraTopic = "/camera/color/image_raw/compressed";
+    [SerializeField] private string velocityTopic = "/car/velocity";
+    [SerializeField] private string cameraTopic = "/tag_visualization";
     private VelocityController VelocityController;
     private CameraStreamController CameraStreamController;
 
-
-    void Awake()
+    public void SetConnectionController(ConnectionController controller)
     {
-        ROSConnection = ROSConnection.GetOrCreateInstance();
-        
-        // Find the controllers
-        VelocityController = FindObjectOfType<VelocityController>();
-        CameraStreamController = FindObjectOfType<CameraStreamController>();
+        ROSConnection = controller.GetROSConnection();
     }
-    void Start()
+
+    public void SetVelocityController(VelocityController controller)
+    {
+        VelocityController = controller;
+    }
+
+    public void SetCameraStreamController(CameraStreamController controller)
+    {
+        CameraStreamController = controller;
+    }
+
+
+    public void InitilaizeSubscribers()
     {
         // Get Velocity Data
-        ROSConnection.RegisterPublisher<TwistMsg>(velocityTopic);
-        ROSConnection.Subscribe<TwistMsg>(velocityTopic, msg => {
+        ROSConnection.Subscribe<Float32Msg>(velocityTopic, msg => {
             VelocityController.OnVelocityReceived(msg);
         });
 
         // Get Camera Data
-        ROSConnection.RegisterPublisher<CompressedImageMsg>(cameraTopic);
-        ROSConnection.Subscribe<CompressedImageMsg>(cameraTopic, msg => {
+        ROSConnection.Subscribe<ImageMsg>(cameraTopic, msg => {
             CameraStreamController.RenderImageStream(msg);
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

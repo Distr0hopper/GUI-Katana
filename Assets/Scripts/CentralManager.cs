@@ -11,14 +11,25 @@ public class CentralManager : MonoBehaviour
     private CameraStateModel cameraStateModel;
     private RobotModel robotModel;
     #endregion
+
+    /**
+     * Dependency Injection
+     * CentralManager is responsible for initializing the connection to the robot, 
+     * and injecting the connection state into the controllers and views that need it.
+     */
     void Start()
     {
         // Find the controllers
-        var connectionLabel = FindObjectOfType<ConnectionLabel>();
         var connectionController = FindObjectOfType<ConnectionController>();
         var cameraStreamController = FindObjectOfType<CameraStreamController>();
-        var switchView = FindObjectOfType<SwitchView>();
+        var incomingMessageController = FindObjectOfType<IncomingMessageController>();
+        var velocityController = FindObjectOfType<VelocityController>();
+
+        // Find the views
+        var connectionLabel = FindObjectOfType<ConnectionLabel>();
         var speedSlider = FindObjectOfType<SpeedSlider>();
+        var switchView = FindObjectOfType<SwitchView>();
+        var velocityLabel = FindObjectOfType<VelocityLabel>();
 
         // Find the publishers
         var speedPublisher = FindObjectOfType<SpeedPublisher>();
@@ -77,5 +88,16 @@ public class CentralManager : MonoBehaviour
         speedSlider.SetRobotModel(robotModel); // Given controller the model
         speedPublisher.SetRobotModel(robotModel); // Given publisher the model
         speedPublisher.SetConnectionController(connectionController); // Given publisher the controller
+
+        // Give the message handler permission about the connection and the controllers that manage the connection
+        incomingMessageController.SetConnectionController(connectionController); // Given controller the model
+        incomingMessageController.SetVelocityController(velocityController); // Given controller the model
+        incomingMessageController.SetCameraStreamController(cameraStreamController); // Given controller the model
+
+        incomingMessageController.InitilaizeSubscribers(); // Initialize the message handler
+
+        // Give the velocity controller permission about the robot model
+        velocityController.SetRobotModel(robotModel); // Given controller the model
+        velocityLabel.SetRobotModel(robotModel); // Given UI the model
     }
 }
