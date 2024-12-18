@@ -9,24 +9,25 @@ using UnityEngine.UIElements;
 public class ConnectionController : MonoBehaviour
 {
     private ConnectionState connectionState { get; set; }
-    [SerializeField] private string robotIP = "130.239.221.73";
     private ROSConnection rosConnection { get; set; }
 
     private float connectionCheckDelay = 1.0f; 
     private float pendingTimeout = 3.0f;
     private Coroutine pendingCoroutine; 
     
-
-    void Start()
+    public ROSConnection GetROSConnection()
     {
-       if (connectionState == null)
-        {
-            connectionState = new ConnectionState(robotIP);
-        }
+        return rosConnection;
+    }
 
+    public void Initialize(ConnectionState state)
+    {
+        connectionState = state;
         rosConnection = ROSConnection.GetOrCreateInstance();
-        rosConnection.RosIPAddress = robotIP;
+        rosConnection.RosIPAddress = connectionState.RobotIP;
         rosConnection.Connect();
+
+        Debug.Log("ConnectionController initialized.");
     }
         
     void Update()

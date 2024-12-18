@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CentralManager : MonoBehaviour
 {
+
+    [SerializeField] private string robotIP = "213.65.204.181";
     #region Models
     private ConnectionState connectionState;
     private CameraStateModel cameraStateModel;
+    private RobotModel robotModel;
     #endregion
     void Start()
     {
@@ -15,6 +18,10 @@ public class CentralManager : MonoBehaviour
         var connectionController = FindObjectOfType<ConnectionController>();
         var cameraStreamController = FindObjectOfType<CameraStreamController>();
         var switchView = FindObjectOfType<SwitchView>();
+        var speedSlider = FindObjectOfType<SpeedSlider>();
+
+        // Find the publishers
+        var speedPublisher = FindObjectOfType<SpeedPublisher>();
     
 
         // Ensure the components exist
@@ -40,20 +47,35 @@ public class CentralManager : MonoBehaviour
         {
             Debug.LogError("SwitchView not found in the scene.");
             return;
+        } if (speedSlider == null)
+        {
+            Debug.LogError("speedSlider not found in the scene.");
+            return;
+        } if (speedPublisher == null)
+        {
+            Debug.LogError("SpeedPublisher not found in the scene.");
+            return;
         }
 
         // Initialize the ConnectionState
-        connectionState = new ConnectionState("213.65.204.181");
+        connectionState = new ConnectionState(robotIP);
+        // Initialize the connection to the robot
+        connectionController.Initialize(connectionState); 
 
         // Inject the connection state into the controllers
         connectionLabel.SetConnectionState(connectionState); // Given UI the model 
-        connectionController.SetConnectionState(connectionState); // Given controller the model
         
         // Initialize the Camera Model 
         cameraStateModel = new CameraStateModel();
-
         // Inject the camera state model into the controllers
         cameraStreamController.SetCameraStateModel(cameraStateModel); // Given controller the model
         switchView.SetCameraStateModel(cameraStateModel); // Given UI the model
+
+        // Initialize the RobotModel
+        robotModel = new RobotModel();
+        // Inject the robot model into the controllers and publishers
+        speedSlider.SetRobotModel(robotModel); // Given controller the model
+        speedPublisher.SetRobotModel(robotModel); // Given publisher the model
+        speedPublisher.SetConnectionController(connectionController); // Given publisher the controller
     }
 }
