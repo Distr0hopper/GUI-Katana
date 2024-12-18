@@ -44,17 +44,13 @@ public class ConnectionLabel : MonoBehaviour
         ipAddressLabel = root.Q<Label>("IPAddr");
     }
 
-    void Start()
-    {
-        // Set the IP address label
-        ipAddressLabel.text = connectionState.RobotIP;
-    }
 
     public void SetConnectionState(ConnectionState connectionState)
     {
         this.connectionState = connectionState;
         connectionState.OnStateChanged += UpdateConnectionStatus;
         UpdateConnectionStatus(); // Initialize UI with the current state
+        ipAddressLabel.text = connectionState.RobotIP;
     }
 
     private void UpdateConnectionStatus()

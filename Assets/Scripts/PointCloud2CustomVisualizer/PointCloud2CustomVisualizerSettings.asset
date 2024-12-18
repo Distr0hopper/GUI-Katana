@@ -17,4 +17,4 @@ MonoBehaviour:
     tfTopic: /tf
   m_ColorModeSetting: 0
   decayTime: 0
-  skipPoints: 1
+  skipPoints: 0

@@ -176,12 +176,11 @@ public class PointCloud2CustomVisualizerSettings : VisualizerSettingsGeneric<Poi
      */
     private List<MyPointCloudDrawing> pointCloudList = new List<MyPointCloudDrawing>();
 
-    [SerializeField] public float decayTime = 0.2f;
+    [SerializeField] public float decayTime = 5.0f;
 
     // How many points to skip when drawing the point cloud (1 = show all, 40 = 40 times less points)
     [FormerlySerializedAs("denseFactor")] public int skipPoints = 1;
     Drawing3d drawing;
-
 
     public override void Draw(Drawing3d drawing, PointCloud2Msg message, MessageMetadata meta)
     {
@@ -272,7 +271,7 @@ public class PointCloud2CustomVisualizerSettings : VisualizerSettingsGeneric<Poi
         
         // Iterate through all points in the point cloud, may skip some points depending on skipPoints
         skipPoints = Math.Max(1, skipPoints);
-        //double theta = Charlie.Instance.CurrentRot.eulerAngles.y;
+
         for (int i = 0; i < maxI; i += skipPoints)
         {
             i = Math.Min(i, maxI - 1);
@@ -295,22 +294,21 @@ public class PointCloud2CustomVisualizerSettings : VisualizerSettingsGeneric<Poi
 
 
             Vector3 unityPoint = rosPoint.toUnity;
-            
             // Transform Point within current TF frame
-            unityPoint = currentTFFrame.TransformPoint(unityPoint);
+            // unityPoint = currentTFFrame.TransformPoint(unityPoint);
 
             // Vector3 rotatedPoint = new Vector3();
-            // rotatedPoint.x = Mathf.Cos((float) (Charlie.Instance.theta * Mathf.Deg2Rad)) * unityPoint.x - Mathf.Sin((float) (Charlie.Instance.theta * Mathf.Deg2Rad)) * unityPoint.z;
-            // rotatedPoint.z = Mathf.Sin((float) (Charlie.Instance.theta * Mathf.Deg2Rad)) * unityPoint.x + Mathf.Cos((float) (Charlie.Instance.theta * Mathf.Deg2Rad)) * unityPoint.z;
+            // rotatedPoint.x = Mathf.Cos((float) (0 * Mathf.Deg2Rad)) * unityPoint.x - Mathf.Sin((float) (0 * Mathf.Deg2Rad)) * unityPoint.z;
+            // rotatedPoint.z = Mathf.Sin((float) (0 * Mathf.Deg2Rad)) * unityPoint.x + Mathf.Cos((float) (0 * Mathf.Deg2Rad)) * unityPoint.z;
             
             // unityPoint.x = rotatedPoint.x;
             // unityPoint.z = rotatedPoint.z;
             
             
             // // Transform Point with the Robot Position so that it changes position with the robot
-            // unityPoint.x += Charlie.Instance.CurrentPos.x;
-            // unityPoint.z += Charlie.Instance.CurrentPos.z;
-            
+            // unityPoint.x += 0;
+            // unityPoint.z += 0;
+
             Color color = colorGenerator(iPointStep);
 
             float radius;

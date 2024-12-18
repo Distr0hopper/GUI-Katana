@@ -1,0 +1,78 @@
+#SpeedSlider #unity-drag-container {
+    background-color: rgba(255, 255, 255, 0);
+    overflow: hidden;
+    flex-grow: 1;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#SpeedSlider #unity-dragger-border {
+}
+
+#SpeedSlider #unity-dragger {
+    flex-grow: 1;
+    height: 100%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    top: 0;
+}
+
+#SpeedSlider #unity-tracker {
+    flex-grow: 1;
+    top: 0;
+    position: relative;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.bar {
+    height: 100%;
+    width: 2000px;
+    background-color: rgb(60, 64, 198);
+    align-self: flex-end;
+}
+
+.new-dragger {
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    background-color: rgb(87, 95, 207);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgba(60, 64, 198, 0);
+    border-right-color: rgba(60, 64, 198, 0);
+    border-top-color: rgba(60, 64, 198, 0);
+    border-bottom-color: rgba(60, 64, 198, 0);
+}
+
+#SpeedSlider VisualElement {
+    top: 0;
+}

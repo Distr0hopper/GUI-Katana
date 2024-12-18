@@ -87,8 +87,11 @@ public class PointCloud2VisualizerSettings : VisualizerSettingsGeneric<PointClou
                         int hueChannelOffset = (int)message.fields[channelToIdx[m_HueChannel]].offset;
                         colorGenerator = (int iPointStep) =>
                         {
-                            int colC = BitConverter.ToInt16(message.data, (iPointStep + hueChannelOffset));
-                            return Color.HSVToRGB(Mathf.InverseLerp(m_HueRange[0], m_HueRange[1], colC), 1, 1);
+                            // int colC = BitConverter.ToInt16(message.data, (iPointStep + hueChannelOffset));
+                            // return Color.HSVToRGB(Mathf.InverseLerp(m_HueRange[0], m_HueRange[1], colC), 1, 1);
+                            
+                            var colC = BitConverter.ToSingle(message.data, (iPointStep + hueChannelOffset));
+                            return Color.HSVToRGB(0.5f * Mathf.InverseLerp(m_HueRange[0], m_HueRange[1], colC), 1, 1);
                         };
                     }
                     break;
@@ -137,6 +140,14 @@ public class PointCloud2VisualizerSettings : VisualizerSettingsGeneric<PointClou
             var x = BitConverter.ToSingle(message.data, iPointStep + xChannelOffset);
             var y = BitConverter.ToSingle(message.data, iPointStep + yChannelOffset);
             var z = BitConverter.ToSingle(message.data, iPointStep + zChannelOffset);
+            
+            // Check for NaN and Infinity values and skip
+            if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z) || float.IsInfinity(x) || float.IsInfinity(y) || float.IsInfinity(z))
+            {
+                continue;
+            }
+            
+            
             Vector3<FLU> rosPoint = new Vector3<FLU>(x, y, z);
             Vector3 unityPoint = rosPoint.toUnity;
 

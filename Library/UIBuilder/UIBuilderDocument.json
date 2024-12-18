@@ -13,7 +13,19 @@
         "m_CodePreviewVisible": true,
         "m_OpenUXMLFiles": [
             {
-                "m_OpenUSSFiles": [],
+                "m_OpenUSSFiles": [
+                    {
+                        "m_StyleSheet": {
+                            "fileID": 7433441132597879392,
+                            "guid": "abda6776f7b1942f7a3668930a680861",
+                            "type": 3
+                        },
+                        "m_BackupStyleSheet": {
+                            "instanceID": 0
+                        },
+                        "m_OldPath": "Assets/GUI/Styles/Slider.uss"
+                    }
+                ],
                 "m_VisualTreeAssetBackup": {
                     "instanceID": 0
                 },
@@ -28,16 +40,16 @@
                 },
                 "m_Settings": {
                     "UxmlGuid": "c80ef61de79210a3abbf1f96abfab29b",
-                    "UxmlPath": "Assets/Scripts/GUI/GUI_Main_XML.uxml",
+                    "UxmlPath": "Assets/GUI/GUI_Main_XML.uxml",
                     "CanvasX": 0,
                     "CanvasY": -1,
                     "CanvasWidth": 1920,
                     "CanvasHeight": 1081,
                     "MatchGameView": false,
-                    "ZoomScale": 0.4000000059604645,
+                    "ZoomScale": 0.949999988079071,
                     "PanOffset": {
-                        "x": 11.6959228515625,
-                        "y": 104.51214599609375
+                        "x": -1255.008544921875,
+                        "y": -376.94586181640627
                     },
                     "ColorModeBackgroundOpacity": 1.0,
                     "ImageModeCanvasBackgroundOpacity": 1.0,
