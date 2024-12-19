@@ -30,9 +30,12 @@ public class CentralManager : MonoBehaviour
         var speedSlider = FindObjectOfType<SpeedSlider>();
         var switchView = FindObjectOfType<SwitchView>();
         var velocityLabel = FindObjectOfType<VelocityLabel>();
+        var emergencyStop = FindObjectOfType<EmergencyStop>();
+        var driveStatus = FindObjectOfType<DriveStatus>();
 
         // Find the publishers
         var speedPublisher = FindObjectOfType<SpeedPublisher>();
+        var ebreakPublisher = FindObjectOfType<EbreakPublisher>();
     
 
         // Ensure the components exist
@@ -65,6 +68,30 @@ public class CentralManager : MonoBehaviour
         } if (speedPublisher == null)
         {
             Debug.LogError("SpeedPublisher not found in the scene.");
+            return;
+        } if (velocityController == null)
+        {
+            Debug.LogError("VelocityController not found in the scene.");
+            return;
+        } if (velocityLabel == null)
+        {
+            Debug.LogError("VelocityLabel not found in the scene.");
+            return;
+        } if (emergencyStop == null)
+        {
+            Debug.LogError("EmergencyStop not found in the scene.");
+            return;
+        } if (driveStatus == null)
+        {
+            Debug.LogError("DriveStatus not found in the scene.");
+            return;
+        } if (incomingMessageController == null)
+        {
+            Debug.LogError("IncomingMessageController not found in the scene.");
+            return;
+        } if (ebreakPublisher == null)
+        {
+            Debug.LogError("EbreakPublisher not found in the scene.");
             return;
         }
 
@@ -99,5 +126,15 @@ public class CentralManager : MonoBehaviour
         // Give the velocity controller permission about the robot model
         velocityController.SetRobotModel(robotModel); // Given controller the model
         velocityLabel.SetRobotModel(robotModel); // Given UI the model
+
+        // Give the emergency stop controller permission about the robot model
+        emergencyStop.SetRobotModel(robotModel); // Given UI the model
+
+        // Give the drive status controller permission about the robot model
+        driveStatus.SetRobotModel(robotModel); // Given UI the model
+
+        // Give the ebreak publisher permission about the robot model and the connection controller
+        ebreakPublisher.SetRobotModel(robotModel); // Given publisher the model
+        ebreakPublisher.SetConnectionController(connectionController); // Given publisher the controller
     }
 }

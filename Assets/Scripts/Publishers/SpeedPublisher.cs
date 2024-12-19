@@ -6,9 +6,6 @@ public class SpeedPublisher : MonoBehaviour
 {
     private ROSConnection ros; // Reference to ROS connection
     [SerializeField] private string topicName = "/robot/speed";
-    private const float publishRate = 0.5f; // Publish every 0.1 seconds
-
-    private float publishTimer;
     private Int32Msg speedMessage = new Int32Msg(); // ROS message type
     private RobotModel robotModel;
 

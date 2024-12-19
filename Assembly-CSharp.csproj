@@ -78,6 +78,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexColorCycler.cs" />
     <Compile Include="Assets/Scripts/Managers/CameraManager.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/EnvMapAnimator.cs" />
+    <Compile Include="Assets/Scripts/Publishers/EbreakPublisher.cs" />
     <Compile Include="Assets/RosMessages/ROSMobile/msg/WD_active_failuresMsg.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_A.cs" />
     <Compile Include="Assets/Scripts/Models/RobotModel.cs" />
@@ -109,10 +110,12 @@
     <Compile Include="Assets/Scripts/Models/ConnectionState.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/WarpTextExample.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextMeshProFloatingText.cs" />
+    <Compile Include="Assets/Scripts/GUI/EmergencyStop.cs" />
     <Compile Include="Assets/Scripts/Models/VelocityModel.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/ShaderPropAnimator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/CameraController.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark03.cs" />
+    <Compile Include="Assets/Scripts/GUI/DriveStatus.cs" />
     <Compile Include="Assets/Scripts/PointCloud2CustomVisualizer/PointCloud2CustomVisualizer.cs" />
     <Compile Include="Assets/Scripts/Models/MyPointCloudDrawing.cs" />
     <Compile Include="Assets/Scripts/GUI/SwitchView.cs" />
