@@ -76,3 +76,75 @@
 #SpeedSlider VisualElement {
     top: 0;
 }
+
+.upperpanel {
+    flex-grow: 1;
+    position: absolute;
+    height: 471px;
+    width: 559px;
+    background-color: rgb(72, 84, 96);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    translate: 0 -18%;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 2s;
+}
+
+.bottompanel {
+    position: absolute;
+    width: 544px;
+    height: 400px;
+    translate: 0 109%;
+    background-color: rgb(72, 84, 96);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    transition-duration: 2s;
+    transition-timing-function: ease-out-bounce;
+}
+
+.bottompanel-up {
+    translate: 0 0;
+}
+
+#VelocityInput #unity-text-input {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+#SteeringInput #unity-text-input {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+#IPAddrInput #unity-text-input {
+    background-color: rgba(255, 255, 255, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.startscreen {
+    flex-grow: 1;
+    background-color: rgb(30, 39, 46);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    transition-timing-function: ease-out;
+    transition-duration: 0.5s;
+}
+
+.startscreen-up {
+    translate: 0 -1181px;
+}

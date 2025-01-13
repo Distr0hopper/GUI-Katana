@@ -29,6 +29,33 @@ public class ConnectionController : MonoBehaviour
 
         Debug.Log("ConnectionController initialized.");
     }
+
+    public void UpdateRobotIP(string newIP)
+    {
+        if (connectionState == null)
+        {
+            Debug.LogError("ConnectionState is not initialized. Cannot update RobotIP.");
+            return;
+        }
+
+        // Update the RobotIP in the existing connection state
+        connectionState.RobotIP = newIP;
+
+        // Update the ROSConnection with the new IP
+        if (rosConnection == null)
+        {
+            rosConnection = ROSConnection.GetOrCreateInstance();
+        }
+
+        rosConnection.RosIPAddress = newIP;
+        rosConnection.Connect();
+
+        Debug.Log($"ConnectionController: Robot IP updated to {newIP}");
+
+        // Trigger the ConnectionLabel to update via the OnStateChanged event
+        connectionState.NotifyStateChanged();
+    }
+
         
     void Update()
     {
@@ -86,7 +113,7 @@ public class ConnectionController : MonoBehaviour
         }
     }
 
-        public void SetConnectionState(ConnectionState connectionState)
+    public void SetConnectionState(ConnectionState connectionState)
     {
         this.connectionState = connectionState;
     }

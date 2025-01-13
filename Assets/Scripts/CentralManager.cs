@@ -24,6 +24,7 @@ public class CentralManager : MonoBehaviour
         var cameraStreamController = FindObjectOfType<CameraStreamController>();
         var incomingMessageController = FindObjectOfType<IncomingMessageController>();
         var velocityController = FindObjectOfType<VelocityController>();
+        var ModeController = FindObjectOfType<ModeController>();
 
         // Find the views
         var connectionLabel = FindObjectOfType<ConnectionLabel>();
@@ -32,6 +33,7 @@ public class CentralManager : MonoBehaviour
         var velocityLabel = FindObjectOfType<VelocityLabel>();
         var emergencyStop = FindObjectOfType<EmergencyStop>();
         var driveStatus = FindObjectOfType<DriveStatus>();
+        var SettingsPanel = FindObjectOfType<SettingsPanel>();
 
         // Find the publishers
         var speedPublisher = FindObjectOfType<SpeedPublisher>();
@@ -93,6 +95,10 @@ public class CentralManager : MonoBehaviour
         {
             Debug.LogError("EbreakPublisher not found in the scene.");
             return;
+        } if (ModeController == null)
+        {
+            Debug.LogError("StateController not found in the scene.");
+            return;
         }
 
         // Initialize the ConnectionState
@@ -120,6 +126,7 @@ public class CentralManager : MonoBehaviour
         incomingMessageController.SetConnectionController(connectionController); // Given controller the model
         incomingMessageController.SetVelocityController(velocityController); // Given controller the model
         incomingMessageController.SetCameraStreamController(cameraStreamController); // Given controller the model
+        incomingMessageController.SetStateController(ModeController); // Given controller the model
 
         incomingMessageController.InitilaizeSubscribers(); // Initialize the message handler
 
@@ -130,11 +137,16 @@ public class CentralManager : MonoBehaviour
         // Give the emergency stop controller permission about the robot model
         emergencyStop.SetRobotModel(robotModel); // Given UI the model
 
+        ModeController.SetRobotModel(robotModel); // Given controller the model
+
         // Give the drive status controller permission about the robot model
         driveStatus.SetRobotModel(robotModel); // Given UI the model
 
         // Give the ebreak publisher permission about the robot model and the connection controller
         ebreakPublisher.SetRobotModel(robotModel); // Given publisher the model
         ebreakPublisher.SetConnectionController(connectionController); // Given publisher the controller
+
+        // Give the settings panel permission about the connection state
+        SettingsPanel.SetConnectionController(connectionController); // Given UI the model
     }
 }

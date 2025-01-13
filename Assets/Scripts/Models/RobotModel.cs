@@ -2,146 +2,194 @@ using System;
 using UnityEngine;
 
 public class RobotModel
-{   
+{
     #region ROS_Properties
-    // Velocity (later updated from ROS topic)
     public Vector3 Velocity { get; private set; }
-
-    // Scalar velocity (magnitude of the velocity vector)
-    public float ScalarVelocity {get; private set; }
-
-    // Pose (later updated from ROS topic)
+    public float velocityFR { get; private set; }
+    public float velocityFL { get; private set; }
+    public float velocityRR { get; private set; }
+    public float velocityRL { get; private set; }
+    public float ScalarVelocity { get; private set; }
     public Vector3 Pose { get; private set; }
-
-    // Distance to Wall (later updated from ROS topic)
     public float DistanceToWall { get; private set; }
 
+    public float maxVelocity { get; private set; }
+    public float maxSteering { get; private set; }
+
+    private bool manualModeActive;
+    public bool ManualModeActive
+    {
+        get => manualModeActive;
+        private set
+        {
+            if (manualModeActive != value)
+            {
+                manualModeActive = value;
+                Debug.Log($"Manual mode changed to {manualModeActive}");
+                OnManualModeChanged?.Invoke(manualModeActive);
+            }
+        }
+    }
+
+    private AutoModes currentAutoMode;
+    public AutoModes CurrentAutoMode
+    {
+        get => currentAutoMode;
+        private set
+        {
+            if (currentAutoMode != value)
+            {
+                currentAutoMode = value;
+                Debug.Log($"Auto mode changed to {currentAutoMode}");
+                OnAutoModeChanged?.Invoke(currentAutoMode);
+            }
+        }
+    }
+
+    public enum AutoModes
+    {
+        None,
+        Explore,
+        Docking,
+        Return
+    }
     #endregion
 
     #region UI Properties
-    // Speed (controlled by the slider in the UI)
-    private int speed;
-    public int Speed
+    private float speed;
+    public float Speed
     {
         get => speed;
         set
         {
             speed = value;
-            OnSpeedChanged?.Invoke(speed); // Notify listeners (controller that sends speed via ROS Topic)
+            OnSpeedChanged?.Invoke(speed);
         }
     }
 
-    // Emergeny stop state (controlled by the button in the UI)
     private bool emergencyStopActive;
-public bool EmergencyStopActive
+    public bool EmergencyStopActive
     {
-        get => currentDriveMode == DriveMode.EmergencyStop;
+        get => emergencyStopActive;
         set
         {
-            if (value)
+            if (emergencyStopActive != value)
             {
-                // Activate emergency stop and save the current mode
-                if (currentDriveMode != DriveMode.EmergencyStop)
-                {
-                    previousDriveMode = currentDriveMode;
-                }
-                CurrentDriveMode = DriveMode.EmergencyStop;
-            }
-            else
-            {
-                // Deactivate emergency stop and revert to previous mode
-                CurrentDriveMode = previousDriveMode;
-            }
-            OnEmergencyStopChanged?.Invoke(value);
-        }
-    }
-
-        public enum DriveMode
-    {
-        Manual,
-        Auto, 
-        EmergencyStop
-    }
-
-    private DriveMode currentDriveMode;
-    private DriveMode previousDriveMode;
-    public DriveMode CurrentDriveMode
-    {
-        get => currentDriveMode;
-        set
-        {
-            if (currentDriveMode != value)
-            {
-                currentDriveMode = value;
-                OnDriveModeChanged?.Invoke(currentDriveMode);
+                emergencyStopActive = value;
+                Debug.Log($"Emergency stop changed to {emergencyStopActive}");
+                OnEmergencyStopChanged?.Invoke(value);
             }
         }
     }
-
     #endregion
 
     #region Events
-
-    // Event to notify listeners when the speed changes
-    public event Action<int> OnSpeedChanged;
-
-    // Event to notify listeners when scalar velocity changes
+    public event Action<float> OnSpeedChanged;
     public event Action<float> OnVelocityChanged;
-
-    // Event to notify listeners when emergency stop state changes
     public event Action<bool> OnEmergencyStopChanged;
-
-    // Event to notify listeners when the drive mode changes
-    public event Action<DriveMode> OnDriveModeChanged;
-
+    public event Action<bool> OnManualModeChanged;
+    public event Action<AutoModes> OnAutoModeChanged;
+    public event Action OnWheelVelocitiesChanged;
+    public event Action OnMaxSteeringChanged;
+    public event Action OnMaxVelocityChanged;
     #endregion
-    
-    // Constructor to initialize default values
+
     public RobotModel()
     {
-        //Velocity = Vector3.zero;
         ScalarVelocity = 0.0f;
         Pose = Vector3.zero;
         DistanceToWall = 0.0f;
         Speed = 100;
         EmergencyStopActive = false;
-        previousDriveMode = DriveMode.Manual;
-        CurrentDriveMode = DriveMode.Manual;
-    }
-
-    private void UpdateDriveModeBasedOnEmergencyStop()
-    {
-        if (EmergencyStopActive)
-        {
-            CurrentDriveMode = DriveMode.EmergencyStop;
-        }
-        else
-        {
-            CurrentDriveMode = DriveMode.Manual;
-        }
-        OnEmergencyStopChanged?.Invoke(EmergencyStopActive);
+        ManualModeActive = false;
+        CurrentAutoMode = AutoModes.None;
     }
 
     public void UpdateScalarVelocity(float newVelocity)
     {
         ScalarVelocity = newVelocity;
-        Debug.Log($"RobotModel updated velocity to {newVelocity}");
         OnVelocityChanged?.Invoke(newVelocity);
     }
 
-    // Methods to update properties from ROS topics
-    public void UpdateVelocity(Vector3 newVelocity)
+    public void UpdateStateData(string stateData)
     {
-        Velocity = newVelocity;
+        try
+        {
+            var state = JsonUtility.FromJson<RobotState>(stateData);
+
+            // Handle emergency stop
+            EmergencyStopActive = state.ebrake_active;
+
+            // Handle manual mode independently
+            ManualModeActive = state.manual_mode;
+
+            // Handle auto modes
+            if (state.explore_mode)
+            {
+                CurrentAutoMode = AutoModes.Explore;
+            }
+            else if (state.docking_mode)
+            {
+                CurrentAutoMode = AutoModes.Docking;
+            }
+            else if (state.return_mode)
+            {
+                CurrentAutoMode = AutoModes.Return;
+            }
+            else
+            {
+                CurrentAutoMode = currentAutoMode;
+            }
+
+            // Debug output for state updates
+            Debug.Log($"Updated state: EmergencyStop={EmergencyStopActive}, ManualMode={ManualModeActive}, CurrentAutoMode={CurrentAutoMode}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to parse state data: {ex.Message}");
+        }
     }
 
-    public void UpdatePose(Vector3 newPose)
+    public void UpdateWheelVelocities(float[] wheelVelocities)
     {
-        Pose = newPose;
+        if (wheelVelocities.Length == 4)
+        {
+            velocityFR = wheelVelocities[0];
+            velocityFL = wheelVelocities[1];
+            velocityRR = wheelVelocities[2];
+            velocityRL = wheelVelocities[3];
+
+            OnWheelVelocitiesChanged?.Invoke();
+            //Debug.Log($"Updated wheel velocities: FR={velocityFR}, FL={velocityFL}, RR={velocityRR}, RL={velocityRL}");
+        }
+        else
+        {
+            Debug.LogError("Invalid wheel velocity data received.");
+        }
+
     }
 
-    public void UpdateDistanceToWall(float distance)
+    public void UpdateMaxVelocity(float newMaxVelocity)
     {
-        DistanceToWall = distance;
+        maxVelocity = newMaxVelocity;
+        Debug.Log($"Updated max velocity: {maxVelocity}");
+        OnMaxSteeringChanged?.Invoke();
+    }
+
+    public void UpdateMaxSteering(float newMaxSteering)
+    {
+        maxSteering = newMaxSteering;
+        Debug.Log($"Updated max steering: {maxSteering}");
+        OnMaxVelocityChanged?.Invoke();
+    }
+
+    [Serializable]
+    private class RobotState
+    {
+        public bool ebrake_active;
+        public bool manual_mode;
+        public bool explore_mode;
+        public bool docking_mode;
+        public bool return_mode;
     }
 }

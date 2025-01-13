@@ -1,0 +1,7 @@
+#Settings:hover {
+    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/settings(2).png?fileID=2800000&guid=137d7a262db21e1f795b90cb33b196ad&type=3#settings(2)');
+    -unity-background-image-tint-color: rgb(60, 64, 198);
+}
+
+.Settings:hover {
+}

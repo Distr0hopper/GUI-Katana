@@ -55,6 +55,7 @@ public class ConnectionLabel : MonoBehaviour
 
     private void UpdateConnectionStatus()
     {
+        ipAddressLabel.text = connectionState.RobotIP;
         switch (connectionState.Status)
         {
             case ConnectionState.ConnectionStatus.Connected:

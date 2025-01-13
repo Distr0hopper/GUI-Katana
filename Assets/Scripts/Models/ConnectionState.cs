@@ -29,15 +29,20 @@ public class ConnectionState
     }
 
     public void UpdateConnectionStatus(ConnectionStatus status, string error = "")
-{
+    {
     if (Status != status || LastError != error)
         {
             Status = status;
             LastError = error;
 
             UnityEngine.Debug.Log($"Connection state updated: {Status}");
-            OnStateChanged?.Invoke();
+            NotifyStateChanged();
         }
-}
+    }
+
+    public void NotifyStateChanged()
+    {
+        OnStateChanged?.Invoke();
+    }
 
 }

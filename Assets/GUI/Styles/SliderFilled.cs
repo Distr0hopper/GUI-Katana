@@ -26,7 +26,7 @@ public class SliderFilled : MonoBehaviour
         AddElements();
 
         // When the slider value changes, update the bar
-        slider.RegisterCallback<ChangeEvent<int>>(SliderValueChanged);
+        slider.RegisterCallback<ChangeEvent<float>>(SliderValueChanged);
 
         // When the sliders layout changes, update the bar
         slider.RegisterCallback<GeometryChangedEvent>(SliderInit);
@@ -51,7 +51,7 @@ public class SliderFilled : MonoBehaviour
         newDragger.transform.position = newDragger.parent.WorldToLocal(pos-dist);
     }
 
-    void SliderValueChanged(ChangeEvent<int> evt){
+    void SliderValueChanged(ChangeEvent<float> evt){
         Vector2 dist = new Vector2((newDragger.layout.width - dragger.layout.width) / 2,(newDragger.layout.height - dragger.layout.height) /2);
         Vector2 pos = dragger.parent.LocalToWorld(dragger.transform.position);
         newDragger.transform.position = newDragger.parent.WorldToLocal(pos-dist);

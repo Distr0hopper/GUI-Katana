@@ -6,8 +6,15 @@ public class DriveStatus : MonoBehaviour
     [SerializeField] private UIDocument UIDocument;
 
     #region UI Elements
-    private Label driveStatusLabel;
+    private Label autoModeLabel;
+    private VisualElement manualActiveIndicator;
+    private VisualElement manualInactiveIndicator;
     #endregion
+
+    private Color passiveRed = new Color(255f / 255f, 63f / 255f, 52f / 255f, 0.3f);
+    private Color activeRed = new Color(255f / 255f, 63f / 255f, 52f / 255f, 1f);
+    private Color passiveGreen = new Color(11f / 255f, 232f / 255f, 129f / 255f, 0.3f);
+    private Color activeGreen = new Color(11f / 255f, 232f / 255f, 129f / 255f, 1f);
 
     private RobotModel robotModel;
 
@@ -15,37 +22,61 @@ public class DriveStatus : MonoBehaviour
     {
         robotModel = model;
 
-        // Subscribe to drive mode changes
-        robotModel.OnDriveModeChanged += UpdateDriveStatusLabel;
+        // Subscribe to updates
+        robotModel.OnManualModeChanged += UpdateManualModeIndicators;
+        robotModel.OnAutoModeChanged += UpdateAutoModeLabel;
 
-        // Initialize the label with the current mode
-        UpdateDriveStatusLabel(robotModel.CurrentDriveMode);
+        // Initialize the UI with the current state
+        UpdateManualModeIndicators(robotModel.ManualModeActive);
+        UpdateAutoModeLabel(robotModel.CurrentAutoMode);
     }
 
     void Start()
     {
         var root = UIDocument.rootVisualElement;
-        driveStatusLabel = root.Q<Label>("DriveLabel");
+        autoModeLabel = root.Q<Label>("ActiveMode");
+        manualActiveIndicator = root.Q<VisualElement>("manualActive");
+        manualInactiveIndicator = root.Q<VisualElement>("manualPassive");
 
-        if (driveStatusLabel == null)
+        if (autoModeLabel == null) Debug.LogError("ActiveMode not found in the UI.");
+        if (manualActiveIndicator == null) Debug.LogError("ManualActiveIndicator not found in the UI.");
+        if (manualInactiveIndicator == null) Debug.LogError("ManualInactiveIndicator not found in the UI.");
+    }
+
+    /// <summary>
+    /// Updates the manual mode indicator lights in the UI.
+    /// </summary>
+    private void UpdateManualModeIndicators(bool isManualActive)
+    {
+        if (manualActiveIndicator != null && manualInactiveIndicator != null)
         {
-            Debug.LogError("DriveLabel not found in the UI.");
+            if (isManualActive)
+            {
+                manualActiveIndicator.style.backgroundColor = activeGreen;
+                manualInactiveIndicator.style.backgroundColor = passiveRed;
+            }
+            else
+            {
+                manualActiveIndicator.style.backgroundColor = passiveGreen;
+                manualInactiveIndicator.style.backgroundColor = activeRed;
+            }
         }
     }
 
-    private void UpdateDriveStatusLabel(RobotModel.DriveMode driveMode)
+    /// <summary>
+    /// Updates the auto mode label in the UI.
+    /// </summary>
+    private void UpdateAutoModeLabel(RobotModel.AutoModes autoMode)
     {
-        if (driveStatusLabel != null)
+        if (autoModeLabel != null)
         {
-            driveStatusLabel.text = driveMode switch
+            autoModeLabel.text = autoMode switch
             {
-                RobotModel.DriveMode.Manual => "Manual Override",
-                RobotModel.DriveMode.EmergencyStop => "Emergency Break",
-                RobotModel.DriveMode.Auto => "Autonomous Drive",
-                _ => "Unknown"
+                RobotModel.AutoModes.Explore => "Exploring",
+                RobotModel.AutoModes.Docking => "Docking",
+                RobotModel.AutoModes.Return => "Returning",
+                _ => "None"
             };
-
-            Debug.Log($"DriveStatus updated to: {driveStatusLabel.text}");
         }
     }
 
@@ -53,7 +84,8 @@ public class DriveStatus : MonoBehaviour
     {
         if (robotModel != null)
         {
-            robotModel.OnDriveModeChanged -= UpdateDriveStatusLabel;
+            robotModel.OnManualModeChanged -= UpdateManualModeIndicators;
+            robotModel.OnAutoModeChanged -= UpdateAutoModeLabel;
         }
     }
 }

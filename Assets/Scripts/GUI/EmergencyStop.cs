@@ -5,25 +5,17 @@ using UnityEngine.UIElements;
 
 public class EmergencyStop : MonoBehaviour
 {
-
     [SerializeField] private UIDocument UIDocument;
 
     #region UI Elements 
     private Button emergencyStopButton;
     #endregion
 
-
     #region Colors
-    //rgba(255, 63, 52,1.0)
-    private Color emergencyStopInactive = new Color(255/255f, 63/255f, 52/255f, 0.6f);
-    private Color emergencyStopActive = new Color(255/255f, 63/255f, 52/255f, 1.0f);   
-
-    //rgba(128, 142, 155,1.0)
-    private Color emergencyStopInactiveBorder = new Color(128/255f, 142/255f, 155/255f, 1.0f);
-
-    //rgba(255, 211, 42,1.0)
-    private Color emergencyStopActiveBorder = new Color(255/255f, 211/255f, 42/255f, 1.0f);
-
+    private Color emergencyStopInactive = new Color(255 / 255f, 63 / 255f, 52 / 255f, 0.6f);  // Inactive red
+    private Color emergencyStopActive = new Color(255 / 255f, 63 / 255f, 52 / 255f, 1.0f);   // Active red
+    private Color emergencyStopInactiveBorder = new Color(128 / 255f, 142 / 255f, 155 / 255f, 1.0f);  // Gray border
+    private Color emergencyStopActiveBorder = new Color(255 / 255f, 211 / 255f, 42 / 255f, 1.0f);     // Yellow border
     #endregion
 
     private RobotModel robotModel;
@@ -31,6 +23,15 @@ public class EmergencyStop : MonoBehaviour
     public void SetRobotModel(RobotModel robotModel)
     {
         this.robotModel = robotModel;
+
+        if (robotModel != null)
+        {
+            // Subscribe to emergency stop state changes
+            robotModel.OnEmergencyStopChanged += UpdateButtonAppearance;
+
+            // Initialize button appearance with the current state
+            UpdateButtonAppearance(robotModel.EmergencyStopActive);
+        }
     }
 
     void Start()
@@ -40,39 +41,50 @@ public class EmergencyStop : MonoBehaviour
 
         if (emergencyStopButton != null)
         {
-            // Set initial apperance 
+            // Set initial appearance based on the RobotModel's current state
             UpdateButtonAppearance(robotModel != null && robotModel.EmergencyStopActive);
 
+            // Attach the click event handler
             emergencyStopButton.clicked += OnEmergencyStopButtonClicked;
+        }
+        else
+        {
+            Debug.LogError("EmergencyStopButton not found in the UI.");
         }
     }
 
-private void OnEmergencyStopButtonClicked()
-{
-    if (robotModel == null)
+    private void OnEmergencyStopButtonClicked()
     {
-        Debug.LogWarning("RobotModel is null. Cannot update emergency stop state.");
-        return;
+        if (robotModel == null)
+        {
+            Debug.LogWarning("RobotModel is null. Cannot update emergency stop state.");
+            return;
+        }
+
+        // Toggle the emergency stop state
+        robotModel.EmergencyStopActive = !robotModel.EmergencyStopActive;
+
+        Debug.Log($"Emergency Stop is now: {(robotModel.EmergencyStopActive ? "Active" : "Inactive")}");
     }
 
-    // Toggle the emergency stop state
-    robotModel.EmergencyStopActive = !robotModel.EmergencyStopActive;
-
-    // Update the button appearance
-    UpdateButtonAppearance(robotModel.EmergencyStopActive);
-
-    Debug.Log($"Emergency Stop is now: {(robotModel.EmergencyStopActive ? "Active" : "Inactive")}");
-}
-
-
-    private void UpdateButtonAppearance(bool isActive){
+    private void UpdateButtonAppearance(bool isActive)
+    {
         if (emergencyStopButton == null) return;
 
-        // Update button background and borders
+        // Update button background and borders based on the state
         emergencyStopButton.style.backgroundColor = isActive ? emergencyStopActive : emergencyStopInactive;
         emergencyStopButton.style.borderBottomColor = isActive ? emergencyStopActiveBorder : emergencyStopInactiveBorder;
         emergencyStopButton.style.borderLeftColor = isActive ? emergencyStopActiveBorder : emergencyStopInactiveBorder;
         emergencyStopButton.style.borderRightColor = isActive ? emergencyStopActiveBorder : emergencyStopInactiveBorder;
         emergencyStopButton.style.borderTopColor = isActive ? emergencyStopActiveBorder : emergencyStopInactiveBorder;
+    }
+
+    private void OnDestroy()
+    {
+        if (robotModel != null)
+        {
+            // Unsubscribe from emergency stop state changes
+            robotModel.OnEmergencyStopChanged -= UpdateButtonAppearance;
+        }
     }
 }

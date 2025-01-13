@@ -19,7 +19,6 @@ public class CameraStreamController : MonoBehaviour
 
     public void RenderImageStream(ImageMsg msg)
     {
-        Debug.Log("Received image stream.");
         lastDataTime = Time.time;
         cameraStateModel?.UpdateCameraState(true);
 

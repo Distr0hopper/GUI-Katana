@@ -11,29 +11,36 @@ public class SpeedSlider : MonoBehaviour
     #region UIElements
 
 
-    private SliderInt sliderInt;
+    private Slider slider;
     private Label speedValue;
 
     #endregion
 
+    private float initialSliderValue;
+    private float doubleClickThreshold = 0.3f;
+    private float lastClickTime = 0;
 
     void Awake(){
         // Get the root of the UI
         var root = UIDocument.rootVisualElement;
 
         // Get the elements from the UI
-        sliderInt = root.Q<SliderInt>("SpeedSlider");
+        slider = root.Q<Slider>("SpeedSlider");
         speedValue = root.Q<Label>("SpeedValue");
 
-        if (sliderInt != null)
+        if (slider != null)
         {
             // Register a callback for value changes
-            sliderInt.RegisterValueChangedCallback(OnSliderValueChanged);
+            slider.RegisterValueChangedCallback(OnSliderValueChanged);
+            // Register a callback for double clicks
+            slider.RegisterCallback<ClickEvent>(OnSliderClicked);
         }
         else
         {
             Debug.LogError("SliderInt 'SpeedSlider' not found in the UI.");
         }
+
+        initialSliderValue = slider.value;
     }
 
     public void SetRobotModel(RobotModel robotModel)
@@ -44,7 +51,7 @@ public class SpeedSlider : MonoBehaviour
 
     
     // Callback for slider value changes
-    private void OnSliderValueChanged(ChangeEvent<int> evt)
+    private void OnSliderValueChanged(ChangeEvent<float> evt)
     {
         // Update the speed value label
         speedValue.text = evt.newValue.ToString();
@@ -52,4 +59,34 @@ public class SpeedSlider : MonoBehaviour
         // Change the robot speed in the model
         robotModel.Speed = evt.newValue;
     }
+
+        // Callback for slider clicks
+    private void OnSliderClicked(ClickEvent evt)
+    {
+        float currentTime = Time.time;
+
+        // Check for double-click
+        if (currentTime - lastClickTime <= doubleClickThreshold)
+        {
+            ResetSliderToInitialValue();
+        }
+
+        lastClickTime = currentTime; // Update the last click time
+    }
+
+    private void ResetSliderToInitialValue()
+    {
+        if (slider != null)
+        {
+            slider.value = initialSliderValue; // Reset slider value
+        }
+
+        if (robotModel != null)
+        {
+            robotModel.Speed = initialSliderValue; // Reset robot speed
+        }
+
+        Debug.Log($"Slider reset to initial value: {initialSliderValue}");
+    }
+
 }

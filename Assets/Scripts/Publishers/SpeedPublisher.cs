@@ -6,7 +6,7 @@ public class SpeedPublisher : MonoBehaviour
 {
     private ROSConnection ros; // Reference to ROS connection
     [SerializeField] private string topicName = "/robot/speed";
-    private Int32Msg speedMessage = new Int32Msg(); // ROS message type
+    private Float32Msg speedMessage = new Float32Msg(); // ROS message type
     private RobotModel robotModel;
 
     public void SetRobotModel(RobotModel model)
@@ -25,10 +25,10 @@ public class SpeedPublisher : MonoBehaviour
 
     private void RegisterPublisher()
     {
-        ros.RegisterPublisher<Int32Msg>(topicName);
+        ros.RegisterPublisher<Float32Msg>(topicName);
     }
 
-    private void OnSpeedChanged(int newSpeed)
+    private void OnSpeedChanged(float newSpeed)
     {
         if (ros == null)
         {
@@ -39,7 +39,7 @@ public class SpeedPublisher : MonoBehaviour
         PublishSpeed(newSpeed);
     }
 
-    private void PublishSpeed(int newSpeed)
+    private void PublishSpeed(float newSpeed)
     {
         speedMessage.data = newSpeed;
         ros.Publish(topicName, speedMessage);

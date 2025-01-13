@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fda1025dd027b546bbb8a0c106199f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotIP: 213.65.204.181
+  robotIP: 130.239.222.222
 --- !u!4 &1220575440
 Transform:
   m_ObjectHideFlags: 0
@@ -482,6 +482,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocityTopic: /car/velocity
   cameraTopic: /tag_visualization
+  stateTopic: /robot_mode
+  wheelVelocityTopic: /wheel_velocities
+  maxVelocityTopic: /max_vel
+  maxSteeringTopic: /max_steering
 --- !u!4 &1225104758
 Transform:
   m_ObjectHideFlags: 0
@@ -889,6 +893,8 @@ GameObject:
   - component: {fileID: 1511057634}
   - component: {fileID: 1511057635}
   - component: {fileID: 1511057636}
+  - component: {fileID: 1511057637}
+  - component: {fileID: 1511057638}
   m_Layer: 0
   m_Name: UIScripts
   m_TagString: Untagged
@@ -989,6 +995,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIDocument: {fileID: 1196339239}
+--- !u!114 &1511057637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511057628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc95bfd0edeca563c9421ae2405f92ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIDocument: {fileID: 1196339239}
+--- !u!114 &1511057638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511057628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c7308ae407c59278dfdab9fdb6d75f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIDocument: {fileID: 1196339239}
 --- !u!1 &1522514894 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5240387698711624104, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
@@ -1021,6 +1053,7 @@ GameObject:
   - component: {fileID: 1636804034}
   - component: {fileID: 1636804033}
   - component: {fileID: 1636804035}
+  - component: {fileID: 1636804036}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1080,6 +1113,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageStream: {fileID: 8400000, guid: 319c833dbdcd319b49994bc35814bdbb, type: 2}
+--- !u!114 &1636804036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636804031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f3522bcf03916399ed43713b85327f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1783338126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1783338127}
   - component: {fileID: 1783338128}
+  - component: {fileID: 1783338129}
   m_Layer: 0
   m_Name: Publishers
   m_TagString: Untagged
@@ -1124,7 +1170,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78799669ae5633a8d865862faa87dae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topicName: /robot/speed
+  topicName: /max_vel
+--- !u!114 &1783338129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783338126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf09c7100e74793b8ab6ba31c7a33eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topicName: /ebrake
 --- !u!1 &1849822397
 GameObject:
   m_ObjectHideFlags: 0
