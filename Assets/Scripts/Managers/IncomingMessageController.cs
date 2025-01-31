@@ -17,9 +17,13 @@ public class IncomingMessageController : MonoBehaviour
     [SerializeField] private string wheelVelocityTopic = "/wheel_velocities";
     [SerializeField] private string maxVelocityTopic = "/max_vel";
     [SerializeField] private string maxSteeringTopic = "/max_steering";
+    [SerializeField] private string velodyneTopic = "/velodyne_points";
+
     private VelocityController VelocityController;
     private CameraStreamController CameraStreamController;
     private ModeController ModeController;
+    private PointCloud2VizController VizController;
+    
     public void SetConnectionController(ConnectionController controller)
     {
         ROSConnection = controller.GetROSConnection();
@@ -38,6 +42,9 @@ public class IncomingMessageController : MonoBehaviour
     public void SetStateController(ModeController controller)
     {
         ModeController = controller;
+    }
+    public void SetVizController(PointCloud2VizController controller){
+        VizController = controller;
     }
 
 
@@ -72,5 +79,10 @@ public class IncomingMessageController : MonoBehaviour
         ROSConnection.Subscribe<Float32Msg>(maxSteeringTopic, msg => {
             VelocityController.OnMaxSteeringReceived(msg);
         });
+
+        ROSConnection.Subscribe<PointCloud2Msg>(velodyneTopic, msg => {
+           VizController.OnPointCloudReceived(msg);
+        });
+
     }
 }

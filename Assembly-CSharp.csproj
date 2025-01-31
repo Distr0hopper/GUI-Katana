@@ -69,6 +69,7 @@
     <Compile Include="Assets/Scripts/GUI/ConnectionLabel.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextEventHandler.cs" />
     <Compile Include="Assets/Scripts/Managers/VelocityController.cs" />
+    <Compile Include="Assets/Scripts/Managers/OutgoingMessageController.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeA.cs" />
     <Compile Include="Assets/Scripts/Models/CameraStateModel.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexColorCycler.cs" />
     <Compile Include="Assets/Scripts/Managers/CameraManager.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/EnvMapAnimator.cs" />
-    <Compile Include="Assets/Scripts/Publishers/EbreakPublisher.cs" />
     <Compile Include="Assets/RosMessages/ROSMobile/msg/WD_active_failuresMsg.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_A.cs" />
     <Compile Include="Assets/Scripts/Models/RobotModel.cs" />
@@ -90,7 +90,6 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/ObjectSpin.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexJitter.cs" />
-    <Compile Include="Assets/Scripts/Publishers/SpeedPublisher.cs" />
     <Compile Include="Assets/Scripts/GUI/SettingsPanel.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_DigitValidator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_FrameRateCounter.cs" />
@@ -120,6 +119,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark03.cs" />
     <Compile Include="Assets/Scripts/GUI/DriveStatus.cs" />
     <Compile Include="Assets/Scripts/PointCloud2CustomVisualizer/PointCloud2CustomVisualizer.cs" />
+    <Compile Include="Assets/Scripts/Managers/PointCloud2VizController.cs" />
     <Compile Include="Assets/Scripts/Models/MyPointCloudDrawing.cs" />
     <Compile Include="Assets/Scripts/GUI/SwitchView.cs" />
     <Compile Include="Assets/Scripts/Managers/CameraStreamController.cs" />

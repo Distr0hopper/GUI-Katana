@@ -96,7 +96,7 @@
     position: absolute;
     width: 544px;
     height: 400px;
-    translate: 0 109%;
+    translate: 0 137%;
     background-color: rgb(72, 84, 96);
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -147,4 +147,15 @@
 
 .startscreen-up {
     translate: 0 -1181px;
+}
+
+#InputWall #unity-text-input {
+    background-color: rgba(255, 255, 255, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 25px;
 }

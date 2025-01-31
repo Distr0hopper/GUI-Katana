@@ -25,6 +25,7 @@ public class SettingsPanel : MonoBehaviour
     public void SetConnectionController(ConnectionController connectionController)
     {
         this.connectionController = connectionController;
+        ipInput.value = connectionController.GetROSConnection().RosIPAddress;
     }
 
     void Awake(){
@@ -72,7 +73,10 @@ public class SettingsPanel : MonoBehaviour
         string ip = ipInput.text;
         Debug.Log($"IP Address set to: {ip}");
         // Send event that IP address changed
-        connectionController.UpdateRobotIP(ip);
+        // If current IP address is different from the one in the UI, update
+        if (connectionController.GetROSConnection().RosIPAddress != ip){
+            connectionController.UpdateRobotIP(ip);
+        }
         settingsPanel.AddToClassList("startscreen-up");
     }
 

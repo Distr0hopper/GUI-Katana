@@ -16,6 +16,8 @@ public class RobotModel
     public float maxVelocity { get; private set; }
     public float maxSteering { get; private set; }
 
+    public float wallDistance { get; private set; }
+
     private bool manualModeActive;
     public bool ManualModeActive
     {
@@ -92,6 +94,7 @@ public class RobotModel
     public event Action OnWheelVelocitiesChanged;
     public event Action OnMaxSteeringChanged;
     public event Action OnMaxVelocityChanged;
+    public event Action OnWallDistanceChanged;
     #endregion
 
     public RobotModel()
@@ -172,15 +175,22 @@ public class RobotModel
     public void UpdateMaxVelocity(float newMaxVelocity)
     {
         maxVelocity = newMaxVelocity;
-        Debug.Log($"Updated max velocity: {maxVelocity}");
-        OnMaxSteeringChanged?.Invoke();
+        //Debug.Log($"Updated max velocity: {maxVelocity}");
+        OnMaxVelocityChanged?.Invoke();
+    }
+
+    public void UpdateWallDistance(float newWallDistance)
+    {
+        wallDistance = newWallDistance;
+        //Debug.Log($"Updated wall distance: {wallDistance}");
+        OnWallDistanceChanged?.Invoke();
     }
 
     public void UpdateMaxSteering(float newMaxSteering)
     {
         maxSteering = newMaxSteering;
-        Debug.Log($"Updated max steering: {maxSteering}");
-        OnMaxVelocityChanged?.Invoke();
+        //Debug.Log($"Updated max steering: {maxSteering}");
+        OnMaxSteeringChanged?.Invoke();
     }
 
     [Serializable]

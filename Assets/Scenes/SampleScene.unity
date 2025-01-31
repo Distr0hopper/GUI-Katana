@@ -435,7 +435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fda1025dd027b546bbb8a0c106199f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotIP: 130.239.222.222
+  robotIP: 192.168.1.176
+  pointCloud2DefaultVisualizerSettings: {fileID: 11400000, guid: 43d86d6349e5b5bada52154f73499eeb, type: 2}
 --- !u!4 &1220575440
 Transform:
   m_ObjectHideFlags: 0
@@ -486,6 +487,7 @@ MonoBehaviour:
   wheelVelocityTopic: /wheel_velocities
   maxVelocityTopic: /max_vel
   maxSteeringTopic: /max_steering
+  velodyneTopic: /velodyne_points
 --- !u!4 &1225104758
 Transform:
   m_ObjectHideFlags: 0
@@ -625,6 +627,10 @@ PrefabInstance:
       propertyPath: m_ID
       value: 3324874550881737244-1288193743
       objectReference: {fileID: 0}
+    - target: {fileID: 3385951721461172776, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
+      propertyPath: m_Topic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3432624721861520032, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_ID
       value: 3432624721861520032-1288193743
@@ -652,6 +658,10 @@ PrefabInstance:
     - target: {fileID: 3885009520023495737, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_Name
       value: DefaultVisualizationSuite
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885009520023495737, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3885009520023495739, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -744,6 +754,10 @@ PrefabInstance:
     - target: {fileID: 5180805759586010064, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_ID
       value: 5180805759586010064-1288193743
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222529248919960493, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
+      propertyPath: m_Topic
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5315367504069929536, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_ID
@@ -839,7 +853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8258684177818339835, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8281281119776082372, guid: 7e8ecfd17cd58c247916864b74797f3f, type: 3}
       propertyPath: m_ID
@@ -1033,7 +1047,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522514894}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea10175baf20344acb8ca963be2c8579, type: 3}
   m_Name: 
@@ -1054,6 +1068,7 @@ GameObject:
   - component: {fileID: 1636804033}
   - component: {fileID: 1636804035}
   - component: {fileID: 1636804036}
+  - component: {fileID: 1636804037}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1125,6 +1140,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f3522bcf03916399ed43713b85327f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1636804037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636804031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2bda443ea2cb3419317711b6fe8689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1783338126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1161,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1783338127}
-  - component: {fileID: 1783338128}
   - component: {fileID: 1783338129}
   m_Layer: 0
   m_Name: Publishers
@@ -1158,19 +1184,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1849822398}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1783338128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783338126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78799669ae5633a8d865862faa87dae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topicName: /max_vel
 --- !u!114 &1783338129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,7 +1196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf09c7100e74793b8ab6ba31c7a33eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topicName: /ebrake
+  breakTopic: /ebreak
+  maxVelocityTopic: /max_vel
+  maxSteeringTopic: /max_steering
+  wallDistanceTopic: /wall_distance
 --- !u!1 &1849822397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,9 +1229,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1220575440}
   - {fileID: 1511057629}
   - {fileID: 1225104758}
-  - {fileID: 1220575440}
   - {fileID: 1196339238}
   - {fileID: 1636804032}
   - {fileID: 1783338127}
